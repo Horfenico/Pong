@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -27,6 +27,8 @@ public class GameScreen implements Screen
     Rectangle bal;
     int playerScore;
     int oppScore;
+    int BALLSPEED;
+    float MAXBOUNCEANGLE = (5 * MathUtils.PI) / 12;
 
     public GameScreen(final Pong png)
     {
@@ -109,6 +111,7 @@ public class GameScreen implements Screen
         if (opponent.y > 480 - 88)
             opponent.y = 480 - 88;
         //Make ball stay in vertical bounds, check if it has gone out of horizontal bounds
+        //TODO change to bounce off wall
         if (bal.y < 24)
             bal.y = 24;
         if (bal.y > 480 - 88)
@@ -119,15 +122,12 @@ public class GameScreen implements Screen
             bal.y = 480 /2;
             oppScore++;
         }
-        if (bal.x > 480)
+        if (bal.x > 800)
         {
             bal.x = 800 /2;
             bal.y = 480 /2;
             playerScore++;
         }
-
-        bal.x -= 50 * Gdx.graphics.getDeltaTime();
-
     }
 
     @Override
